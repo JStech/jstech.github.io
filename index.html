@@ -1,25 +1,20 @@
-<html><head><title>John Stechschulte</title>
-<script type="text/javascript">
+---
+layout: layout
+title: John Stechschulte
+---
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-3413554-3']);
-  _gaq.push(['_setDomainName', 'stechschulte.net']);
-  _gaq.push(['_trackPageview']);
+<div class="content">
+  Read my <a href="bike_tour/">US bike tour journal</a>.
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+  <h3>Posts</h3>
+  <div class="related">
+    <ul>
+      {% for post in site.posts %}
+      <li>
+      <span>{{ post.date | date: "%B %e, %Y" }}</span> <a href="{{ post.url }}">{{ post.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 
-</script>
-</head>
-<body>
-
-<h2>John Stechschulte</h2>
-
-<ul><li><a href="bike_tour/index.html">Cross-country bike tour journal</a>
-</ul>
-
-</body>
-</html>

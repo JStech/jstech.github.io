@@ -4,6 +4,7 @@ body {
   color: #c8cbce;
   width: 800px;
   margin: 0 auto 0 auto;
+  line-height:130%;
 }
 
 a:link {

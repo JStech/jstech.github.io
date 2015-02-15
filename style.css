@@ -1,25 +1,19 @@
 body {
   font-family: sans-serif;
-  background-color: #1a1b27;
-  color: #c8cbce;
   width: 800px;
   margin: 0 auto 0 auto;
   line-height:130%;
 }
 
 a:link {
-  color: #5499a4;
 }
 
 a:visited {
-  color: #7b293d;
 }
 
 h1 a:visited, h1 a:link {
-  color: #c1ad97;
   text-decoration: none;
 }
 
 h2, h3, h4, h5, h6 {
-  color: #535f6f;
 }

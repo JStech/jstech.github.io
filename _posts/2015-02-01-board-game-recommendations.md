@@ -1,5 +1,5 @@
 ---
-layout: layout
+layout: comments
 title: A Board Game Recommendation Engine
 ---
 

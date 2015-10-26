@@ -1,0 +1,80 @@
+---
+layout: reveal
+title: DTAM, Newcombe et al.
+pres: true
+---
+
+DTAM: Dense Tracking and Mapping in Real-Time
+=============================================
+Richard A. Newcombe, Steven J. Lovegrove and Andrew J. Davison
+
+<small>All images taken from paper.</small>
+
+---
+
+DTAM: Dense Tracking and Mapping in Real-Time
+---------------------------------------------
+* _Dense_: pixel-by-pixel correlation between images&mdash;no feature
+  extraction
+* _Tracking_: where's the camera?
+   * _and_: a conjunction
+* _Mapping_: what does the world look like?
+   * _in_: a preposition
+* _Real-Time_: useful for robotics
+
+---
+
+Overview
+--------
+* Mapping
+   * Photometric cost
+   * Regularization
+   * Primal/dual problem
+   * Optimization
+* Tracking
+* Video
+
+---
+
+Notation
+--------
+|||
+| --- | --- |
+| \\(\mathbf{I}\_r\\) | reference image \\(r\\) |
+| \\(\mathbf{I}\_m \in \mathscr{I}(r)\\) | non-reference image \\(I\_m\\) that refers to \\(I\_r\\) |
+| \\(\mathbf{u}\\) | pixel coordinates, \\((M \times N)\\) |
+| \\(\xi\_r\\) | inverse depth map |
+| \\(\mathbf{C}\_r\\) | cost volume for \\(I\_r\\) |
+
+---
+
+Mapping: Cost volume
+--------------------
+![Cost Volume](/res/cost_volume.png)
+
+---
+
+Mapping: Cost volume
+--------------------
+$$ \mathbf{C}\_r(\mathbf{u}, d) = \frac{1}{|\mathscr{I}(r)|} \sum\_{m \in \mathscr{I}(r)} ||\rho\_r(\mathbf{I}\_m, \mathbf{u}, d)||\_1 $$
+
+$$ \rho\_r(\mathbf{I}\_m, \mathbf{u}, d) = \mathbf{I}\_r(u) - \mathbf{I}\_m(\pi(KT\_{mr}\pi^{-1}(\mathbf{u}, d))) $$
+
+<br>
+### In layman's terms:
+* for a given pixel in the reference image, and
+* for a given (inverse) depth
+* we sum the differences of RGB intensities with the appropriate pixels in the other images
+
+---
+
+Mapping: Regularization
+-----------------------
+* Prior beliefs enforced with Huber norm, \\(||x||\_\epsilon\\):
+  * Depth varies smoothly: \\(|x| \leq \epsilon \implies\\) quadratic
+  * Except where it doesn't: linear elsewhere
+* But we also get clues from the image gradient:
+  * Use a per-pixel weight \\(g(\mathbf{u}) = exp(-\alpha||\nabla\mathbf{I}\_r(\mathbf{u})||\_2^\beta)\\)
+
+<br>
+$$ g(\mathbf{u}) ~ ||\nabla\xi(\mathbf{u})||\_\epsilon $$

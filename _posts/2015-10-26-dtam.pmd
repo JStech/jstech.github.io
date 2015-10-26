@@ -29,7 +29,6 @@ Overview
 * Mapping
    * Photometric cost
    * Regularization
-   * Primal/dual problem
    * Optimization
 * Tracking
 * Video
@@ -42,8 +41,9 @@ Notation
 | --- | --- |
 | \\(\mathbf{I}\_r\\) | reference image \\(r\\) |
 | \\(\mathbf{I}\_m \in \mathscr{I}(r)\\) | non-reference image \\(I\_m\\) that refers to \\(I\_r\\) |
-| \\(\mathbf{u}\\) | pixel coordinates, \\((M \times N)\\) |
-| \\(\xi\_r\\) | inverse depth map |
+| \\(\Omega\\) | Image coordinates, \\((M \times N)\\) |
+| \\(\mathbf{u}\\) | pixel coordinates, an element of \\(\Omega\\) |
+| \\(\xi\_r\\) | inverse depth map for \\(I\_r\\) |
 | \\(\mathbf{C}\_r\\) | cost volume for \\(I\_r\\) |
 
 ---
@@ -62,9 +62,9 @@ $$ \rho\_r(\mathbf{I}\_m, \mathbf{u}, d) = \mathbf{I}\_r(u) - \mathbf{I}\_m(\pi(
 
 <br>
 ### In layman's terms:
-* for a given pixel in the reference image, and
-* for a given (inverse) depth
-* we sum the differences of RGB intensities with the appropriate pixels in the other images
+* for a given pixel in the reference image, and for a given (inverse) depth
+* we find the absolute difference with the appropriate pixels in the other images
+* and we sum them over all nearby images
 
 ---
 
@@ -78,3 +78,43 @@ Mapping: Regularization
 
 <br>
 $$ g(\mathbf{u}) ~ ||\nabla\xi(\mathbf{u})||\_\epsilon $$
+
+---
+
+Optimization
+------------
+Original problem:
+$$ E\_\xi = \int\_\Omega \left( g(\mathbf{u})~||\nabla\xi(\mathbf{u})||\_\epsilon + \lambda \mathbf{C}(\mathbf{u}, \xi(\mathbf{u})) \right) d\mathbf{u} $$
+
+<br>
+
+Add an auxiliary term \\(\alpha\\) and a coupling term:
+\\begin{split} E\_{\xi,\alpha} = \int\_\Omega \left( g(\mathbf{u})~||\nabla\xi(\mathbf{u})||\_\epsilon + \frac{1}{2\Theta}(\xi(\mathbf{u}) - \alpha(\mathbf{u}))^2 + \\\\
+\lambda \mathbf{C}(\mathbf{u}, \alpha(\mathbf{u})) \right) d\mathbf{u} \\end{split}
+
+---
+
+Why make it _more_ complicated?
+-------------------------------
+
+|||
+| --- | --- |
+| Convex | \\(g(\mathbf{u})~&#124;&#124;\nabla\xi(\mathbf{u})&#124;&#124;\_\epsilon + \frac{1}{2\Theta}(\xi(\mathbf{u}) - \alpha(\mathbf{u}))^2\\) |
+| One-dimensional | \\(\frac{1}{2\Theta}(\xi(\mathbf{u}) - \alpha(\mathbf{u}))^2 + \lambda \mathbf{C}(\mathbf{u}, \alpha(\mathbf{u}))\\) |
+
+(It's actually even more complicated than that.)
+
+---
+
+Tracking
+--------
+* Project model into virtual camera, and compare with what we're seeing
+* Estimate rotation first, then full 6DOF
+* Use a power-of-2 image pyramid
+* Robustified by ignoring outliers
+
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Df9WhgibCQA" frameborder="0" allowfullscreen></iframe>
+
+

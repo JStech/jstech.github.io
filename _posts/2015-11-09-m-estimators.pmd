@@ -1,0 +1,47 @@
+---
+layout: reveal
+title: Self-tuning M-estimators, Agamennoni et al.
+pres: true
+---
+
+Self-tuning M-estimators
+========================
+G. Agamenonni, P. Furgale, R. Siegwart
+
+<small>All images taken from paper except where otherwise noted.</small>
+
+---
+
+Short version
+-------------
+ * SLAM involves solving a non-linear least squares problem
+ * Ordinary least squares assumes Gaussian residuals
+ * Outliers make OLS go bonkers
+ * Robust least squares uses some other m-estimator
+
+<br>
+
+### How do we pick an m-estimator?
+<!-- .element: class="fragment" data-fragment-index="1" -->
+### How do we set its parameters?
+<!-- .element: class="fragment" data-fragment-index="1" -->
+Let the data tell us.
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---
+
+M-estimators
+------------
+
+Estimation of an unknown quantity obtained by minimizing a sum of a function of
+the data.
+
+$$ \min \sum\_i \rho(r\_i) $$
+
+| Type           | \\(\rho(x)\\)         |
+| -------------- | --------------------- |
+| OLS/\\(L\_2\\) | \\(x^2\\)             |
+| \\(L\_1\\)     | \\(x\\)               |
+| Huber          | \\(\begin{cases} &#124;x&#124; < k & x^2/2 \\\\ &#124;x&#124; \geq k & k(&#124;x&#124; - k/2) \end{cases} \\) |
+
+More: Tukey, Cauchy, "Fair" . . .

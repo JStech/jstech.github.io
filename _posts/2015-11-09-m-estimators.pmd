@@ -12,8 +12,8 @@ G. Agamenonni, P. Furgale, R. Siegwart
 
 ---
 
-Short version
--------------
+Motivation
+----------
  * SLAM involves solving a non-linear least squares problem
  * Ordinary least squares assumes Gaussian residuals
  * Outliers make OLS go bonkers
@@ -30,11 +30,8 @@ Let the data tell us.
 
 ---
 
-M-estimators
-------------
-
-Estimation of an unknown quantity obtained by minimizing a sum of a function of
-the data.
+An M-estimator estimates an unknown quantity by minimizing a sum of a function
+of the data.
 
 $$ \min \sum\_i \rho(r\_i) $$
 
@@ -45,3 +42,4 @@ $$ \min \sum\_i \rho(r\_i) $$
 | Huber          | \\(\begin{cases} &#124;x&#124; < k & x^2/2 \\\\ &#124;x&#124; \geq k & k(&#124;x&#124; - k/2) \end{cases} \\) |
 
 More: Tukey, Cauchy, "Fair" . . .
+

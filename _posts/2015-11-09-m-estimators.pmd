@@ -17,11 +17,11 @@ Motivation
  * SLAM involves solving a non-linear least squares problem
  * Ordinary least squares assumes Gaussian residuals
  * Outliers make OLS go bonkers
- * Robust least squares uses some other m-estimator
+ * Robust least squares uses some other M-estimator
 
 <br>
 
-### How do we pick an m-estimator?
+### How do we pick an M-estimator?
 <!-- .element: class="fragment" data-fragment-index="1" -->
 ### How do we set its parameters?
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -43,3 +43,13 @@ $$ \min \sum\_i \rho(r\_i) $$
 
 More: Tukey, Cauchy, "Fair" . . .
 
+---
+
+Overview
+--------
+
+ * M-estimators and elliptical distributions
+ * Expectation-maximization to optimize parameters and latent weights
+ * Adaptive importance sampling to estimate M-estimator parameters
+ * Putting it all together
+ * Experimental results

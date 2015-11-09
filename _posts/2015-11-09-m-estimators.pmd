@@ -38,18 +38,115 @@ $$ \min \sum\_i \rho(r\_i) $$
 | Type           | \\(\rho(x)\\)         |
 | -------------- | --------------------- |
 | OLS/\\(L\_2\\) | \\(x^2\\)             |
-| \\(L\_1\\)     | \\(x\\)               |
+| \\(L\_1\\)     | \\(&#124;x&#124;\\)               |
 | Huber          | \\(\begin{cases} &#124;x&#124; < k & x^2/2 \\\\ &#124;x&#124; \geq k & k(&#124;x&#124; - k/2) \end{cases} \\) |
 
 More: Tukey, Cauchy, "Fair" . . .
 
 ---
 
-Overview
+The Gist
 --------
 
- * M-estimators and elliptical distributions
- * Expectation-maximization to optimize parameters and latent weights
+ * Many M-estimators have a corresponding elliptical distribution, \\(p(\mathbf
+   x, \mathbf \theta, \phi)\\)
+ * We can use maximum likelihood to tune distribution parameters: \\(\max\_\phi
+   p(\mathbf x, \mathbf \theta, \phi) \\)
+ * Expectation-maximization optimizes parameters and problem variables:
+   * Given \\(\mathbf x, \phi,~max\_{\mathbf \theta} p(\mathbf x, \mathbf
+     \theta, \phi) \\)
+   * Given \\(\mathbf x, \mathbf \theta,~max\_\phi p(\mathbf x, \mathbf \theta,
+     \phi) \\)
+ * Elliptical distributions as scale mixtures of Gaussians
  * Adaptive importance sampling to estimate M-estimator parameters
- * Putting it all together
- * Experimental results
+
+---
+
+Elliptical distribution
+-----------------------
+
+$$ \mathbf{x} \sim \mathscr{E}(\psi, \mathbf{\mu}, \mathbf{\Sigma}) $$
+<br>
+$$ \begin{split} p(\mathbf{x}) = \frac{1}{2} \Gamma(d/2) \pi^{-d/2} c(\psi)^{-1} \det(\mathbf{\Sigma})^{-1/2} \\\\
+\exp\left(-\frac{1}{2} \psi\left({(\mathbf{x} - \mathbf{\mu})}^T \mathbf{\Sigma}^{-1} (\mathbf{x} - \mathbf{\mu})\right)\right) \end{split} $$
+<br>
+$$ c(\psi) \triangleq \frac{1}{2} \int\_0^\infty t^{\frac{d}{2} - 1} \exp\left(-\frac{1}{2} \psi(t)\right) dt $$
+
+<!--
+\\(\psi: \mathbb R\_+ \to \mathbb R\\) captures the character of the distribution.
+Integral has to converge (doesn't for Tukey, Geman-McLure, Welsch M-estimators)
+-->
+
+---
+
+![Table of M-estimators with their corresponding elliptical distribution
+characteristic equations](/res/m-est_table.png)
+
+---
+
+Maximum Likelihood!
+-------------------
+
+Plugging in the generator, we now know \\(p(\mathbf x | \theta, \phi)\\).
+
+Tune \\(\phi\\) and find \\(\theta\\) by minimizing the negative
+log-likelihood:
+$$ \min\_{\phi,\theta} \left[ n \ln c(\psi) + \frac{1}{2} \sum\_{k=1}^n \psi \left( || \mathbf x\_k - \mathbf f\_k(\mathbf \theta) ||^2\right)\right] $$
+
+<br><br>
+Analytically?
+
+Not so fast&mdash;need to know \\(\frac{d \psi}{d \phi}\\).
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+#### An elliptical distribution can be written as a scale mixture of Gaussians
+
+$$ \mathbf x | w \sim \mathscr N (\mathbf \mu, w^{-1}\mathbf \Sigma) $$
+
+"The mixing weight \\(w\\) is an auxiliary variable that originates from the
+expansion. This is convenient for parameter estimation since it renders
+\\(\mathbf x\\) conditionally Gaussian. In non-linear least-squares, if we
+somehow knew the exact value of \\(w\\), then the negative log-likelihood would
+be a quadratic function of the residuals."
+
+$$ \mathbf x\_k | w\_k \sim \mathscr N (f\_k(\mathbf \theta), w\_k^{-1} \mathbf I) $$
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+Expectation-Maximization
+------------------------
+
+$$ -\sum\_{k=1}^n \mathbb E[\ln p(\mathbf x\_k, w\_k)] $$
+$$ = \frac{1}{2} \sum\_{k=1}^n \mathbb E[w\_k | \mathbf x\_k] ||x\_k - f\_k(\mathbf \theta)||^2 + \dots $$
+
+E-step computes most likely \\(w\_k\\).
+
+M-step optimizes over \\(\theta\\).
+
+---
+
+However, can't calculate \\(\mathbb E[w\_k | \mathbf x\_k]\\) directly.
+
+Solution: Adaptive importance sampling. Prior distribution \\(p(\phi)\\)
+sampled via proposal distribution \\(q(\phi)\\).
+
+$$ \mathbb E[w\_k | \mathbf x\_k] \simeq \sum\_{j=1}^{|\Psi|} \rho\_j \mathbb E[w\_k | \mathbf x\_k, \psi\_j] $$
+$$ \mathbb E[w\_k | \mathbf x\_k, \psi\_j] = \psi'\_j \left(||\mathbf x\_k - f\_k(\mathbf \theta)||^2\right)^\* $$
+$$ \rho\_j \propto \frac{p(\phi\_j)}{q(\phi\_j)} \prod\_{k=1}^{n} p(\mathbf x\_k | \mathbf \theta, \phi\_j) $$
+
+\* Proof in the appendix.
+
+---
+
+![Self-tuning M-estimation pseudo-code](/res/m-est_alg.png)
+
+---
+
+![Results 1](/res/m-est_res1.png)
+
+---
+
+![Results 2](/res/m-est_res2.png)

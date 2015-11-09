@@ -53,9 +53,9 @@ The Gist
  * We can use maximum likelihood to tune distribution parameters: \\(\max\_\phi
    p(\mathbf x, \mathbf \theta, \phi) \\)
  * Expectation-maximization optimizes parameters and problem variables:
-   * Given \\(\mathbf x, \phi,~max\_{\mathbf \theta} p(\mathbf x, \mathbf
+   * Given \\(\mathbf x, \phi,~\max\_{\mathbf \theta} p(\mathbf x, \mathbf
      \theta, \phi) \\)
-   * Given \\(\mathbf x, \mathbf \theta,~max\_\phi p(\mathbf x, \mathbf \theta,
+   * Given \\(\mathbf x, \mathbf \theta,~\max\_\phi p(\mathbf x, \mathbf \theta,
      \phi) \\)
  * Elliptical distributions as scale mixtures of Gaussians
  * Adaptive importance sampling to estimate M-estimator parameters

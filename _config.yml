@@ -20,6 +20,5 @@ reveal_dependencies:
 reveal_path: reveal.js/
 
 # Don't change anything below
-markdown: redcarpet
 pygments: true
 

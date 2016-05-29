@@ -18,7 +18,3 @@ reveal_dependencies:
 
 # Reveal.js subdirectory
 reveal_path: reveal.js/
-
-# Don't change anything below
-pygments: true
-

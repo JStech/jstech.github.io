@@ -1,6 +1,6 @@
 ---
 layout: layout
-title: Lake Street Dive and Grace Potter, Red Rocks, 19 August 2016
+title: Lake Street Dive, Red Rocks, 19 August 2016
 ---
 
 Lake Street Dive at Red Rocks

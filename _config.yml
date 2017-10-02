@@ -18,3 +18,5 @@ reveal_dependencies:
 
 # Reveal.js subdirectory
 reveal_path: reveal.js/
+
+markdown: kramdown

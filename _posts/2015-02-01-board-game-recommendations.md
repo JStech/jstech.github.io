@@ -1,6 +1,7 @@
 ---
 layout: comments
 title: A Board Game Recommendation Engine
+published: false
 ---
 
 I decided to create a recommendation engine for board games, using data scraped

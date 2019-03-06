@@ -1,6 +1,7 @@
 ---
 layout: comments
 title: IdeaVIM in Android Studio
+published: false
 ---
 
 Android Studio is great. So is vim. I've figured out how to get the best of

@@ -1,6 +1,7 @@
 ---
 layout: comments
 title: Just a Flashlight
+published: false
 ---
 
 A simple flashlight app was one of the first things I downloaded when I got a

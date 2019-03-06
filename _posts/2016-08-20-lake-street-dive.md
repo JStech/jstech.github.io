@@ -1,6 +1,7 @@
 ---
 layout: layout
 title: Lake Street Dive, Red Rocks, 19 August 2016
+published: false
 ---
 
 Lake Street Dive at Red Rocks

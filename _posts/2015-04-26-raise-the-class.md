@@ -1,6 +1,7 @@
 ---
 layout: comments
 title: Raise the Class - Dayna Kurtz
+published: false
 ---
 
 The internet doesn't seem to have these lyrics, and it's a great shame.
